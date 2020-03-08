@@ -1,6 +1,6 @@
 use crate::traits::InputParser;
 use amethyst::{
-    ecs::{Join, Read, System, SystemData, World, Write, WriteExpect},
+    ecs::{Read, System, SystemData, World, Write, WriteExpect},
     input::InputHandler,
     shrev::EventChannel,
     utils::circular_buffer::CircularBuffer,
@@ -36,9 +36,9 @@ where
         &mut self,
         (input, mut events, mut now_signal, mut input_buffer, system): Self::SystemData,
     ) {
-        let prev = input_buffer.queue().iter().last().map(|p| *p);
+        let prev = input_buffer.queue().iter().last();
         let current = I::add_buffer(&input, prev);
-        input_buffer.push(current);
+        input_buffer.push(current.clone());
 
         events.iter_write(I::parse_input(&input_buffer, system));
 
