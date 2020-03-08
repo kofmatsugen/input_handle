@@ -21,6 +21,6 @@ pub trait InputParser<'s> {
     // 格ゲーのコマンド入力とかに使う
     fn parse_input(
         buffer: &CircularBuffer<Self::InputSignal>,
-        system: &mut Self::SystemData,
+        system: Self::SystemData,
     ) -> Vec<Self::Event>;
 }

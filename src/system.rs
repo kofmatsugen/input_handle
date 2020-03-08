@@ -34,13 +34,13 @@ where
 
     fn run(
         &mut self,
-        (input, mut events, mut now_signal, mut input_buffer, mut system): Self::SystemData,
+        (input, mut events, mut now_signal, mut input_buffer, system): Self::SystemData,
     ) {
         let prev = input_buffer.queue().iter().last().map(|p| *p);
         let current = I::add_buffer(&input, prev);
         input_buffer.push(current);
 
-        events.iter_write(I::parse_input(&input_buffer, &mut system));
+        events.iter_write(I::parse_input(&input_buffer, system));
 
         *now_signal = current;
     }
