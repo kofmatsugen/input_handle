@@ -1,6 +1,6 @@
 use crate::traits::InputParser;
 use amethyst::{
-    ecs::{Read, System, SystemData, World, Write, WriteExpect},
+    ecs::{Join, Read, System, SystemData, World, Write, WriteExpect},
     input::InputHandler,
     shrev::EventChannel,
     utils::circular_buffer::CircularBuffer,
@@ -22,7 +22,7 @@ impl<I> InputHandleSystem<I> {
 
 impl<'s, I> System<'s> for InputHandleSystem<I>
 where
-    I: InputParser,
+    I: InputParser<'s>,
 {
     type SystemData = (
         Read<'s, InputHandler<I::BindingTypes>>,
