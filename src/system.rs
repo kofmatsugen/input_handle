@@ -23,6 +23,7 @@ impl<I> InputHandleSystem<I> {
 impl<'s, I> System<'s> for InputHandleSystem<I>
 where
     I: InputParser<'s>,
+    I::Event: std::fmt::Debug,
 {
     type SystemData = (
         Read<'s, InputHandler<I::BindingTypes>>,
@@ -40,7 +41,13 @@ where
         let current = I::add_buffer(&input, prev);
         input_buffer.push(current.clone());
 
-        events.iter_write(I::parse_input(&input_buffer, system));
+        let parsed = I::parse_input(&input_buffer, system);
+
+        if parsed.len() > 0 {
+            log::info!("command detect: {:?}", parsed);
+        }
+
+        events.iter_write(parsed);
 
         *now_signal = current;
     }

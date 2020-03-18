@@ -8,3 +8,8 @@ edition = "2018"
 
 [dependencies]
 amethyst = {git = "https://github.com/amethyst/amethyst.git"}
+log={version = "0.4.8"}
+
+[features]
+default=[]
+debug=[]
