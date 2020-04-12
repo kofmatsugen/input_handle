@@ -37,6 +37,9 @@ where
         &mut self,
         (input, mut events, mut now_signal, mut input_buffer, system): Self::SystemData,
     ) {
+        #[cfg(feature = "profiler")]
+        thread_profiler::profile_scope!("input-handle");
+
         let prev = input_buffer.queue().iter().last();
         let current = I::add_buffer(&input, prev);
         input_buffer.push(current.clone());
